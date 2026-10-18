@@ -1,0 +1,52 @@
+ROLE
+Act as a principal Windows desktop engineer, Adobe Premiere Pro UXP plugin developer, MCP engineer, AI/video processing engineer, QA lead, and release engineer. Build a working production-quality Windows application named Maddy AI Video Editor, not just plans or sample code. Work iteratively in this repository. Do not claim success without running tests and producing artifacts. Ask only for genuinely unavailable secrets, license/installation prerequisites, or decisions that block execution. Never fabricate APIs or results.
+
+PRODUCT GOAL
+Deliver MaddyAIEditor_Setup_v1.0.exe: a Windows 11 installer for a standalone desktop editing agent that connects to an installed, licensed Adobe Premiere Pro through a companion UXP plugin. The installer must install the app, local processing components, shortcuts and uninstall entry; provide a supported way to install or guide installation of the Premiere .ccx plugin. Premiere is NOT bundled. The application must function for file inspection and analysis without Premiere and switch to connected editing mode once the plugin is installed. MCP is a tool interface; it is not permission to control Premiere without a working plugin and bridge.
+
+TECHNOLOGY AND DESIGN
+- Windows 11 x64, Python 3.12 unless dependency compatibility requires another pinned version, PySide6 for GUI, FastAPI (localhost loopback only) for service/bridge, Python MCP server, FFmpeg/ffprobe with verified distribution rights, optional PySceneDetect, selectable offline and cloud transcription adapters, structured JSON editing plan, UXP JavaScript plugin and documented Premiere UXP APIs.
+- Build/install on Windows; PyInstaller artifacts must be built on Windows. Create Inno Setup installer using reproducible .iss script. Use CI on Windows when possible.
+- Organize project into apps/desktop, services/agent, services/media, integrations/premiere_uxp, mcp, tests, installer, docs, samples, scripts. Keep strict interfaces and schemas, isolate Adobe API methods in adapters, and use dependency lockfiles.
+- Confirm official API support against exact Premiere/UXP version and document feature matrix. Use official Adobe UXP Developer Tool to package .ccx. Do not fake a Premiere timeline modification using desktop mouse automation. If needed function cannot be implemented in supported UXP APIs, disable feature clearly and propose a supported alternative.
+
+MVP USER FLOW
+1. Launch desktop app; first-run wizard checks Premiere/Creative Cloud, plugin version, FFmpeg, folders, model configuration, permissions, free disk space.
+2. Select a local video (MP4/MOV) and choose Car Review, Travel Vlog, Educational Video or Shorts preset.
+3. Probe media, detect silence/scenes, transcribe selected language (Kannada/English where supported), show timestamped transcript and proposed cuts.
+4. Display editable timecoded JSON edit plan with source path, rationales, durations, confidence and before/after preview strategy. Preserve original sources.
+5. When Premiere is connected, inspect active project/sequence; explicitly ask user approval; create a duplicate/new sequence and apply only supported cuts/insertions, with operation log and recovery strategy. If editing API unavailable, export a clearly labeled interoperable edit-decision file or supported import alternative rather than falsely claiming edits were applied.
+6. Generate SRT caption file, optionally import it with a verified supported method; background-music placement and transitions are later gated features.
+7. Show export options. Require approval for export; execute only if verified API support exists, otherwise guide user through Premiere export. Verify output media with ffprobe where programmatically produced.
+
+MCP TOOL CONTRACT
+Implement read-only list_capabilities, health_check, probe_media, analyze_media, transcribe_media, get_premiere_connection, get_active_project, get_active_sequence, create_edit_plan, validate_edit_plan, preview_edit_plan. Implement state-changing apply_approved_edit_plan and request_export only with an explicit approval token issued by the desktop UI and narrow per-operation scope. Validate inputs with schemas; normalize paths; reject paths outside allowlisted locations; use request IDs, timeouts, bounded retries, logs and error codes. No arbitrary shell-execution MCP tool. Service binds 127.0.0.1 only with session authentication and origin validation.
+
+SECURITY, PRIVACY AND COMPLIANCE
+- No destructive modifications to originals; work on duplicates and project backups.
+- No embedded cloud API keys, user passwords or unrestricted network listeners. Use Windows credential storage for optional cloud secrets; redact secrets/log paths in support bundles.
+- Cloud upload is opt-in with file-size, destination and privacy notice; default local analysis when feasible.
+- Validate downloaded packages, license obligations and FFmpeg build redistribution terms; provide third-party notices.
+- Explicitly distinguish development UXP Developer Mode from end-user .ccx installation via Creative Cloud Desktop/UPIA. Avoid unsupported silent installs. Codesigning certificate optional for local testing, recommended for distribution; never bypass Windows security.
+
+IMPLEMENTATION PHASES / MANDATORY GATES
+PHASE 0: Check Windows environment, versions, Adobe documentation and dependencies; write architecture.md, capability-matrix.md, threats.md, acceptance-tests.md, ADRs; identify blockers.
+PHASE 1: Build a polished PySide6 desktop UI with import media, job queue, progress, activity log, settings, errors and accessibility. Unit tests.
+PHASE 2: Implement media probe, silence/scene analysis, transcript adapters, JSON plan and SRT output. Use fixture media. Ensure no external API is required for baseline workflow.
+PHASE 3: Build Premiere UXP plugin: detect active project and active sequence using verified API; show connectivity/diagnostics panel; implement a safe local bridge; test in actual Premiere on Windows. Package .ccx in UXP Developer Tool.
+PHASE 4: Add validated duplicate-sequence edits only after successful API capability tests; operation-level approval, undo/backup and idempotency. Feature flags for unsupported calls.
+PHASE 5: Build MCP server and connect to local agent; verify schema validation, least privilege, approval flow, negative security tests and a realistic natural-language workflow.
+PHASE 6: Package desktop executable using PyInstaller, .ccx separately, and installer using Inno Setup. Installer checks prerequisites; plugin installation via documented interactive method or UPIA only when available and explicitly accepted. Create uninstall and cleanup option. Test offline/online installs.
+PHASE 7: QA on a CLEAN Windows 11 VM with Premiere installed and licensed; smoke/e2e/regression, antivirus scan, install/update/uninstall, non-admin operation where possible, multilingual captions and oversized/broken files. Produce checksums, SBOM/dependency notices and release notes.
+
+REQUIRED OUTPUTS
+A. Complete Git repository with real source files (no stubs presented as finished), README, documented prerequisites and build.bat/build.ps1 scripts.
+B. Windows installer dist/MaddyAIEditor_Setup_v1.0.exe, packaged .ccx, hashes and release notes; if not possible in current environment, clearly state build remains unverified and supply deterministic Windows build instructions—do not invent binaries.
+C. Test report with actual commands, pass/fail results, Premiere version, evidence screenshots/logs, unsupported-feature list, residual risks and first-run installation instructions.
+D. User manual for importing, analyzing, connecting Premiere, reviewing cuts, applying edits, captions, exporting and uninstalling.
+
+WORK RULES
+Use official API docs and pin compatible versions. Before each implementation phase: state design and measurable acceptance checks. Then implement working code, run automated tests, report outputs and commit logically. Never report a Premiere integration as functioning until tested against Premiere. If current environment is not Windows or lacks Premiere, complete OS-independent modules now and create a Windows validation checklist and build scripts for subsequent execution. Continue phase by phase, prioritize a working small MVP over invented advanced features.
+
+INITIAL TASK
+Inspect this repository and the current build environment. Produce: (1) dependency/version matrix, (2) high-level architecture and filesystem layout, (3) acceptance checklist and prioritized backlog, (4) actual Phase 1 code + tests, (5) next exact commands. Then continue implementation through available phases, keeping the repository buildable.
