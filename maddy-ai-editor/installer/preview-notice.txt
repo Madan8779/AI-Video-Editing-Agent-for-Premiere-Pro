@@ -1,0 +1,9 @@
+Maddy AI Video Editor - Development Preview
+
+Local media analysis is available with separately installed FFmpeg/ffprobe tools.
+Adobe Premiere Pro is a separately licensed application and is not included.
+The UXP companion is supplied as developer source. It requires Adobe UXP
+Developer Tool for loading; a release CCX is not included in this preview.
+Timeline edits and automated export remain disabled pending real-host testing.
+Offline transcription requires an optional adapter and a separately obtained model.
+This preview has not completed clean-machine installation or release qualification.

@@ -1,0 +1,10 @@
+﻿{
+    "host":  "Windows 11 build 26200, existing development machine",
+    "clean_vm":  false,
+    "install_exit":  0,
+    "application_exit":  0,
+    "uninstall_exit":  0,
+    "executable_removed":  true,
+    "uninstall_entry_removed":  true,
+    "installer_sha256":  "560150AC6604A6734CBEE4ADFEF2C34E47D939468E2BA72CD6E0641BDBDB05B1"
+}

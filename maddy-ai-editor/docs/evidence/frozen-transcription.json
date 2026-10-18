@@ -1,0 +1,26 @@
+{
+  "analysis_complete": true,
+  "output_duration": 12.231474000000002,
+  "transcript": [
+    {
+      "start": 0.0,
+      "end": 3.0,
+      "text": "Welcome to Madi Video Editor."
+    },
+    {
+      "start": 3.0,
+      "end": 5.0,
+      "text": "We are reviewing a car today."
+    },
+    {
+      "start": 5.0,
+      "end": 9.0,
+      "text": "The engine is smooth and the cabin is comfortable."
+    },
+    {
+      "start": 9.0,
+      "end": 14.0,
+      "text": "Please review every proposed cut before exporting your video."
+    }
+  ]
+}

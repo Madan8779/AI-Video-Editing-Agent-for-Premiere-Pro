@@ -1,0 +1,3 @@
+# Optional: resolve and lock separately before distributing the adapter.
+faster-whisper>=1.2,<2
+av>=18,<19

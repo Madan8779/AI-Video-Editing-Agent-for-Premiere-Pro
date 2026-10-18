@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>
+body { padding:18px; color:#e7ebf4; background:#191f2b; font-family:Arial; }
+h2 { font-size:20px; } p { line-height:1.5; } input { width:100%; margin:12px 0; }
+button { margin:8px 8px 8px 0; } #status { white-space:pre-wrap; }
+</style></head><body>
+<h2>Maddy Companion</h2>
+<p>Connect to the Maddy desktop app to inspect the active project and sequence.</p>
+<label>Desktop session key <input id="key" type="password" placeholder="Paste session key"></label>
+<button id="connect">Connect</button><button id="disconnect">Disconnect</button>
+<p id="status">Disconnected. Open the desktop app and choose Connect Premiere.</p>
+<p>Inspection only. Timeline edits and export automation await host validation.</p>
+<script src="panel.js"></script>
+</body></html>

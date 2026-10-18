@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+.pytest_cache/
+build/
+dist/
+samples/generated/
+*.spec
+*.log
+.ruff_cache/
+artifacts/
+settings.json
+session.json
+.env
+.env.*
+!.env.example

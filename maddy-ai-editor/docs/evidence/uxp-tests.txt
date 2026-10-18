@@ -1,0 +1,11 @@
+﻿✔ adapter inspects project and sequence through documented methods (1.3274ms)
+✔ adapter reports missing project and missing active sequence (0.3577ms)
+✔ manifest restricts host and network permissions (0.5893ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 83.9781
